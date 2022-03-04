@@ -1,4 +1,4 @@
-$("#currentDay").text(moment().format('llll'));
+$("#currentDay").text(moment().format('dddd, MMMM Do'));
 var savedTasks = new Array();
 
 function createDiv(){
@@ -14,7 +14,7 @@ function createDiv(){
 
     //populate inner divs
      
-    for (var i=9; i<18; i++) {
+     for (var i=9; i<18; i++) {
 
         currHr = moment().format('HH')
         var spanEl = document.createElement("span");
@@ -61,6 +61,14 @@ function createDiv(){
 
     }
 }
+
+
+$(".container").on("click", "i", function(){
+    var timeID = $(this).attr("data-time-id");
+    var text = $(`[data-span-time-id=${timeID}]`).text()
+    saveTasks(timeID, text);
+});
+
 $(".container").on("click", "span", function() {
     var text = $(this)
     .text()
