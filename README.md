@@ -8,7 +8,7 @@ A local calendar website where you can edit what task you want to get done in th
 ## Installation
 
 
-Install What-calander using this command in bash terminal or click [this link](https://psyche-l.github.io/What-Calendar../)
+Install What-Calander using this command in bash terminal or click [this link](https://psyche-l.github.io/What-Calendar../)
 
 ```bash
   git clone git@github.com:Psyche-L/What-Calendar...git
@@ -22,7 +22,7 @@ Install What-calander using this command in bash terminal or click [this link](h
 
 ## Known Bugs
 
-I missed spelled Calender😔. Throughout countless testing, I didn't find any. If you do, please make an issue on the issues page [here](https://github.com/Psyche-L/What-Calendar../issues) 
+I missed spelled Calender on the repo name😔. Throughout countless testing, I didn't find any. If you do, please make an issue on the issues page [here](https://github.com/Psyche-L/What-Calendar../issues) 
 
 Also, free to clone the repository and collaborate with me!
 

@@ -1,15 +1,18 @@
 $("#currentDay").text(moment().format('dddd, MMMM Do'));
+
 var savedTasks = new Array();
+
+
 
 function createDiv(){
     var mainDiv = $(".container");
 
     // main div
     for (var i=0; i<9; i++) {
-        var newDiv = document.createElement("div");
-        newDiv.className = "row";
-        newDiv.id = i+9;
-        mainDiv.append(newDiv);
+        var div = document.createElement("div");
+        div.className = "row";
+        div.id = i+9;
+        mainDiv.append(div);
     }
 
     // div content
@@ -19,12 +22,12 @@ function createDiv(){
         currHr = moment().format('HH')
         var spanEl = document.createElement("span");
         var innerDiv = $("#" + i);
-        var timeDiv = document.createElement("div");
-        timeDiv.className = "col-1 hour";
-        timeDiv.id += i
-        timeDiv.textContent = moment(i, ["HH.mm"]).format("h A");
+        var hourDiv = document.createElement("div");
+        hourDiv.className = "col-1 hour";
+        hourDiv.id += i
+        hourDiv.textContent = moment(i, ["HH.mm"]).format("h A");
 
-        spanEl.setAttribute("data-span-time-id", (i-9).toString());
+        spanEl.setAttribute("data-span-hourBl-id", (i-9).toString());
 
         if (currHr>i) {
             spanEl.className = "col-10 past";
@@ -42,20 +45,20 @@ function createDiv(){
         var iEl  = document.createElement("i");
 
         iEl.className = "fa fa-save my-4 mx-1"
-        iEl.setAttribute("data-time-id", (i-9).toString());
+        iEl.setAttribute("data-hourBl-id", (i-9).toString());
 
         saveDiv.className = "col-1 saveBtn"
         saveDiv.id = i;
 
         try {
-            spanEl.innerText = savedTasks.find( ({ timeID }) => timeID === (i-9).toString()).task;
+            spanEl.innerText = savedTasks.find( ({ hourBl }) => hourBl === (i-9).toString()).task;
         }
         catch (e) {
             spanEl.innerText = '';
         }
     
         saveDiv.append(iEl)
-        innerDiv.append(timeDiv);
+        innerDiv.append(hourDiv);
         innerDiv.append(spanEl);
         innerDiv.append(saveDiv);
 
@@ -64,9 +67,9 @@ function createDiv(){
 
 
 $(".container").on("click", "i", function(){
-    var timeID = $(this).attr("data-time-id");
-    var text = $(`[data-span-time-id=${timeID}]`).text()
-    saveTasks(timeID, text);
+    var hourBl = $(this).attr("data-hourBl-id");
+    var text = $(`[data-span-hourBl-id=${hourBl}]`).text()
+    saveTasks(hourBl, text);
 });
 
 $(".container").on("click", "span", function() {
@@ -74,10 +77,10 @@ $(".container").on("click", "span", function() {
     .text()
     .trim();
 
-    var timeID = $(this).attr('data-span-time-id');
+    var hourBl = $(this).attr('data-span-hourBl-id');
 
     var textInput = $("<textarea>").addClass($(this).attr("class")).val(text);
-    textInput.attr("data-span-time-id", timeID)
+    textInput.attr("data-span-hourBl-id", hourBl)
 
     $(this).replaceWith(textInput)
     textInput.trigger("focus");
@@ -86,31 +89,34 @@ $(".container").on("click", "span", function() {
 
 // editable field was un-focused
 $(".container").on("blur", "textarea", function() {
+    
     // get current value of textarea
 
     var text = $(this).val();
-    var timeID = $(this).attr('data-span-time-id');
+    var hourBl = $(this).attr('data-span-hourBl-id');
 
-    // recreate <span> element
+    // recreate span element
     var taskSpan = $("<span>")
     .addClass($(this).attr("class"))
     .text(text);
    
-    taskSpan.attr("data-span-time-id", timeID)
+    taskSpan.attr("data-span-hourBl-id", hourBl)
   
     // text area
     $(this).replaceWith(taskSpan);
 
 });
 
-function saveTasks(timeID, task) {
+//  save task to local storage
+function saveTasks(hourBl, task) {
+    
     try {
-      var tempObj = savedTasks.find(x => x.timeID === timeID); 
+      var tempObj = savedTasks.find(x => x.hourBl === hourBl); 
       tempObj.task = task;
     }
     catch (e) {
         var oTask = {};
-        oTask.timeID = timeID;
+        oTask.hourBl = hourBl;
         oTask.task = task;
         savedTasks.push(oTask);
     }
@@ -123,6 +129,7 @@ function saveTasks(timeID, task) {
     
 }
 
+// local storage
 function loadTasks() {
     if (localStorage.dailyTasks) {
         savedTasks = JSON.parse(localStorage.getItem('dailyTasks'))
