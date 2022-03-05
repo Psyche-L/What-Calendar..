@@ -4,7 +4,7 @@ var savedTasks = new Array();
 function createDiv(){
     var mainDiv = $(".container");
 
-    //populate the main div container
+    // main div
     for (var i=0; i<9; i++) {
         var newDiv = document.createElement("div");
         newDiv.className = "row";
@@ -12,7 +12,7 @@ function createDiv(){
         mainDiv.append(newDiv);
     }
 
-    //populate inner divs
+    // div content
      
      for (var i=9; i<18; i++) {
 
@@ -98,7 +98,7 @@ $(".container").on("blur", "textarea", function() {
    
     taskSpan.attr("data-span-time-id", timeID)
   
-    // replace textarea with new content
+    // text area
     $(this).replaceWith(taskSpan);
 
 });
@@ -118,9 +118,9 @@ function saveTasks(timeID, task) {
         localStorage.setItem('dailyTasks', JSON.stringify(savedTasks));
     }
     catch (e) {
-        alert("Something went wrong! Please try again.")
+        
     }
-    alert("Task saved successfully!")
+    
 }
 
 function loadTasks() {
